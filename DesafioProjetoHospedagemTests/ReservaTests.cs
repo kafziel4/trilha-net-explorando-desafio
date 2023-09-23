@@ -39,5 +39,22 @@ namespace DesafioProjetoHospedagemTests
             cadastrar.Should().Throw<ArgumentException>()
                 .WithMessage("A quantidade de hóspedes não pode exceder a capacidade da suíte");
         }
+
+        [Fact]
+        public void ObterQuantidadeHospedes_HospedesCadastrados_DeveRetornarQuantidadeHospedes()
+        {
+            // Arrange
+            List<Pessoa> hospedes = PessoaHelper.CriarHospedes(quantidade: 2);
+            Suite suite = SuiteHelper.CriarSuite(capacidade: 2);
+            Reserva reserva = ReservaHelper.CriarReserva(diasReservados: 5);
+            reserva.CadastrarSuite(suite);
+            reserva.CadastrarHospedes(hospedes);
+
+            // Act
+            int quantidade = reserva.ObterQuantidadeHospedes();
+
+            // Assert
+            quantidade.Should().Be(2);
+        }
     }
 }
