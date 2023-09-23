@@ -71,5 +71,23 @@ namespace DesafioProjetoHospedagemTests
             // Assert
             valor.Should().Be(150);
         }
+
+        [Theory]
+        [InlineData(10, 270)]
+        [InlineData(12, 324)]
+        public void CalcularValorDiaria_ReservaMaiorIgual10Dias_DeveRetornarValorComDesconto(
+            int diasReservados, decimal valorEsperado)
+        {
+            // Arrange            
+            Suite suite = SuiteHelper.CriarSuite(capacidade: 2, valorDiaria: 30);
+            Reserva reserva = ReservaHelper.CriarReserva(diasReservados: diasReservados);
+            reserva.CadastrarSuite(suite);
+
+            // Act
+            decimal valor = reserva.CalcularValorDiaria();
+
+            // Assert
+            valor.Should().Be(valorEsperado);
+        }
     }
 }
